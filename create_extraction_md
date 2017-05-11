@@ -1,0 +1,20 @@
+
+create table admin.extraction_by_table as
+select distinct id, name, sysdate as date_extracted, sum(rows)
+from stv_tbl_perm 
+where name like 'bg_%'
+or name like 'ac_%'
+or name like 'cc_%'
+or name like 'ct_%'
+or name like 'mm_%'
+group by 1, 2, 3 order by name
+ 
+ 
+create table admin.extraction_by_game as 
+select distinct  substring(name, 1,3), sysdate, sum(rows) from stv_tbl_perm 
+where name like 'bg_%'
+or name like 'ac_%'
+or name like 'cc_%'
+or name like 'ct_%'
+or name like 'mm_%'
+group by 1, 2 order by substring(name, 1,3)
